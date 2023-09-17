@@ -10,6 +10,14 @@
     <string name="phone_manufact_caption">Phone Manufacturer: </string>
     <string name="phone_model_caption">Phone Model: </string>
 
+    <string name="server_ip_caption">Server IP address: </string>
+    <string name="client_ip_caption">Client IP address: </string>
+    <string name="server_time_caption">Server local time: </string>
+    <string name="client_time_caption">Client local time: </string>
+    <string name="my_name_caption">My name: </string>
+    <string name="logged_in_caption">Logged in: </string>
+
+
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
 

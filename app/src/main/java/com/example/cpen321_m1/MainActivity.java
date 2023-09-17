@@ -81,15 +81,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        locationButton = findViewById(R.id.location_button);
-//        locationButton.setOnClickListener((new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d(TAG, "Requesting location permissions");
-////                checkLocationPermission();
-//            }
-//        }));
-
         phoneButton = findViewById(R.id.phone_button);
         phoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,9 +112,6 @@ public class MainActivity extends AppCompatActivity {
                             Intent data = result.getData();
                             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                             handleSignInResult(task);
-
-                            Intent serverInfoIntent = new Intent(MainActivity.this, ServerInfoActivity.class);
-                            startActivity(serverInfoIntent);
                         }
                     }
                 });
@@ -132,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "Server info button click");
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 signInActivityResultLauncher.launch(signInIntent);
-
             }
         });
     } // end of onCreate
@@ -146,6 +134,15 @@ public class MainActivity extends AppCompatActivity {
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);
+            Toast.makeText(MainActivity.this, "Opening server info", Toast.LENGTH_LONG).show();
+            Intent serverInfoIntent = new Intent(MainActivity.this, ServerInfoActivity.class);
+
+            // pass in the logged in username as a string parameter to the new activity
+            Bundle b = new Bundle();
+            b.putString("username", account.getDisplayName());
+            serverInfoIntent.putExtras(b);
+
+            startActivity(serverInfoIntent);
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -178,59 +175,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private void checkLocationPermission()
-//    {
-//        if ((ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-//                && (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED))
-//        {
-//            // already have perms, do nothing
-//            Toast.makeText(MainActivity.this, "Location permissions already enabled", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        else
-//        {
-//            // at least one of the permissions was denied
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-//                    || ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION))
-//            {
-//                Toast.makeText(MainActivity.this, "We need these location permissions for phone details", Toast.LENGTH_LONG).show();
-//                new AlertDialog.Builder(this)
-//                        .setTitle("Need Location Permissions")
-//                        .setMessage("We need the location permissions to update current city phone details")
-//                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                Toast.makeText(MainActivity.this, "We need these location permissions to run", Toast.LENGTH_LONG).show();
-//                                dialogInterface.dismiss();
-//                            }
-//                        })
-//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                ActivityCompat.requestPermissions(MainActivity.this, new String[] {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//                            }
-//                        })
-//                        .create()
-//                        .show();
-//            }
-//            // permissions were never requested
-//            else
-//            {
-//                Toast.makeText(MainActivity.this, "Requesting permissions", Toast.LENGTH_LONG).show();
-//                ActivityCompat.requestPermissions(MainActivity.this, new String[] {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onLocationChanged(@NonNull Location location) {
-//        Log.d(TAG, "Lat: " + location.getLatitude() + " | Long: " + location.getLongitude());
-//        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-//        try {
-//            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-//            cityLocation = addresses.get(0).getAddressLine(0);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 }
