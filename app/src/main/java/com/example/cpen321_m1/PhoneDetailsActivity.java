@@ -33,7 +33,9 @@ import java.util.Locale;
 
 public class PhoneDetailsActivity extends AppCompatActivity implements LocationListener {
     final static String TAG = "PhoneDetailsActivity";
-    String cityLocation = "unknown";
+    public static double locationLat;
+    public static double locationLong;
+    public static String cityLocation = "unknown";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,9 @@ public class PhoneDetailsActivity extends AppCompatActivity implements LocationL
         try {
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             cityLocation = addresses.get(0).getLocality();
+            locationLat = addresses.get(0).getLatitude();
+            locationLong = addresses.get(0).getLongitude();
+
             TextView currentCityText = (TextView) findViewById(R.id.current_city_text);
             currentCityText.setText(String.format("Current City: %s", cityLocation));
         } catch (IOException e) {

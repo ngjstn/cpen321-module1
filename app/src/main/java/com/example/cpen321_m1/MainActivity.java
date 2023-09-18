@@ -40,12 +40,11 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     final static String TAG = "MainActivity";
-    private Integer RC_SIGN_IN = 1;
     private Button mapsButton;
     private Button phoneButton;
     private Button loginButton;
     private Button surpriseButton;
-    private Button locationButton;
+
 
     private String cityLocation = "unknown";
     private GoogleSignInClient mGoogleSignInClient;
@@ -54,21 +53,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        // attempt to request location perms on launch
-//        checkLocationPermission();
-//        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
 
         mapsButton = findViewById(R.id.maps_button);
         mapsButton.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +107,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Server info button click");
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 signInActivityResultLauncher.launch(signInIntent);
+            }
+        });
+
+        surpriseButton = findViewById(R.id.surprise_button);
+        surpriseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Surprise button click");
+                Intent surpriseIntent = new Intent(MainActivity.this, SurpriseActivity.class);
+                startActivity(surpriseIntent);
             }
         });
     } // end of onCreate
